@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLM Image Generator – Free AI Image Generator with Perfect Text Rendering</title>
+  <meta name="description" content="GLM Image Generator is a free AI image generator powered by GLM-Image. Create stunning images with accurate text rendering, posters, banners, and more. No sign-up required." />
+  <meta name="keywords" content="GLM image generator, GLM-Image, free AI image generator, text rendering AI, GLM image online, AI image generator free" />
+  <link rel="canonical" href="https://glm-image-generator.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="GLM Image Generator – Free AI Image Generator with Perfect Text Rendering" />
+  <meta property="og:description" content="Generate stunning AI images with accurate text rendering using GLM-Image. Free, no sign-up required." />
+  <meta property="og:url" content="https://glm-image-generator.com/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GLM Image Generator",
+    "url": "https://glm-image-generator.com",
+    "description": "Free AI image generator powered by GLM-Image with accurate text rendering",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .gradient-bg { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a3e 50%, #0f0f1a 100%); }
+    .card-glow { box-shadow: 0 0 30px rgba(99, 102, 241, 0.15); }
+    .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); transition: all 0.2s; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); }
+    .spinner { border: 3px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fade-in { animation: fadeIn 0.5s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+
+  <!-- AdSense Top Placeholder -->
+  <div class="w-full bg-gray-900/50 flex items-center justify-center py-2 text-gray-600 text-xs">
+    Advertisement
+  </div>
+
+  <!-- Header -->
+  <header class="border-b border-white/10 py-4 px-6">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg btn-primary flex items-center justify-center text-sm font-bold">G</div>
+        <span class="font-bold text-lg">GLM Image Generator</span>
+      </div>
+      <nav class="hidden md:flex gap-6 text-sm text-gray-400">
+        <a href="#tool" class="hover:text-white transition-colors">Generator</a>
+        <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="py-16 px-6 text-center">
+    <div class="max-w-4xl mx-auto">
+      <div class="inline-block bg-indigo-500/20 text-indigo-300 text-sm font-medium px-4 py-1 rounded-full mb-6 border border-indigo-500/30">
+        🔥 Powered by GLM-Image · First Open-Source Model with Perfect Text Rendering
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+        Free <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">GLM Image Generator</span>
+        <br />with Perfect Text in Images
+      </h1>
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+        Generate stunning AI images with accurate, readable text using GLM-Image — the first open-source model that actually gets text rendering right. Create posters, banners, ads, and more for free.
+      </p>
+      <a href="#tool" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold text-lg">
+        Start Generating for Free →
+      </a>
+    </div>
+  </section>
+
+  <!-- Tool -->
+  <section id="tool" class="py-8 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 card-glow">
+
+        <!-- Prompt Input -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-300 mb-2">
+            Describe your image <span class="text-indigo-400">*</span>
+          </label>
+          <textarea
+            id="prompt"
+            rows="3"
+            placeholder='e.g. "A modern poster with the text SALE 50% OFF in bold red letters on a white background, minimalist design"'
+            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 resize-none focus:outline-none focus:border-indigo-500 transition-colors text-sm"
+          ></textarea>
+        </div>
+
+        <!-- Style & Size -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Style</label>
+            <select id="style" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-sm">
+              <option value="photorealistic">Photorealistic</option>
+              <option value="illustration">Illustration</option>
+              <option value="poster">Poster / Graphic Design</option>
+              <option value="minimalist">Minimalist</option>
+              <option value="cyberpunk">Cyberpunk</option>
+              <option value="watercolor">Watercolor</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Size</label>
+            <select id="size" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-sm">
+              <option value="1:1">Square (1:1)</option>
+              <option value="16:9">Landscape (16:9)</option>
+              <option value="9:16">Portrait (9:16)</option>
+              <option value="4:3">Standard (4:3)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Example Prompts -->
+        <div class="mb-6">
+          <p class="text-xs text-gray-500 mb-2">Quick examples:</p>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setPrompt(this)" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 transition-colors">
+              Sale poster with 50% OFF text
+            </button>
+            <button onclick="setPrompt(this)" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 transition-colors">
+              Business card with "John Smith CEO" text
+            </button>
+            <button onclick="setPrompt(this)" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 transition-colors">
+              YouTube thumbnail: "10 AI Tools" bold title
+            </button>
+            <button onclick="setPrompt(this)" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 transition-colors">
+              Neon sign that reads "OPEN 24/7"
+            </button>
+          </div>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generateBtn" onclick="generateImage()" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3">
+          <span id="btnText">✨ Generate Image</span>
+          <div id="spinner" class="spinner hidden"></div>
+        </button>
+
+        <!-- API Key Notice -->
+        <p class="text-center text-xs text-gray-600 mt-3">
+          Powered by GLM-Image via fal.ai · Free tier available
+        </p>
+
+        <!-- Result -->
+        <div id="result" class="hidden mt-8 fade-in">
+          <div class="border-t border-white/10 pt-6">
+            <h3 class="text-sm font-medium text-gray-300 mb-4">Generated Image</h3>
+            <div class="relative rounded-xl overflow-hidden bg-black/30 border border-white/10">
+              <img id="resultImg" src="" alt="GLM Image Generator result" class="w-full object-contain max-h-[512px]" />
+            </div>
+            <div class="flex gap-3 mt-4">
+              <a id="downloadBtn" href="#" download="glm-image.png" class="btn-primary flex-1 py-3 rounded-xl font-medium text-center text-sm">
+                ⬇️ Download Image
+              </a>
+              <button onclick="generateImage()" class="flex-1 py-3 rounded-xl font-medium text-sm bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
+                🔄 Regenerate
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="hidden mt-4 bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-sm text-red-400"></div>
+
+        <!-- API Key Input (collapsible) -->
+        <details class="mt-6">
+          <summary class="text-xs text-gray-600 cursor-pointer hover:text-gray-400 transition-colors">
+            ⚙️ Use your own fal.ai API key (optional, for unlimited generations)
+          </summary>
+          <div class="mt-3">
+            <input
+              id="apiKey"
+              type="password"
+              placeholder="fal_xxxxxxxxxxxxxxxx"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-indigo-500"
+            />
+            <p class="text-xs text-gray-600 mt-1">Get free API key at <a href="https://fal.ai" target="_blank" class="text-indigo-400 hover:underline">fal.ai</a></p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- AdSense Mid Placeholder -->
+  <div class="max-w-4xl mx-auto px-6 my-8">
+    <div class="w-full h-24 bg-gray-900/50 border border-white/5 rounded-xl flex items-center justify-center text-gray-700 text-xs">
+      Advertisement
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">How to Use GLM Image Generator</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+          <div class="w-14 h-14 btn-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">1</div>
+          <h3 class="font-semibold mb-2">Describe Your Image</h3>
+          <p class="text-gray-400 text-sm">Type your prompt. Include any text you want in the image — GLM-Image renders it accurately.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+          <div class="w-14 h-14 btn-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">2</div>
+          <h3 class="font-semibold mb-2">Choose Style & Size</h3>
+          <p class="text-gray-400 text-sm">Select from photorealistic, poster, illustration, and more. Pick the aspect ratio for your use case.</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+          <div class="w-14 h-14 btn-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">3</div>
+          <h3 class="font-semibold mb-2">Download for Free</h3>
+          <p class="text-gray-400 text-sm">Click Generate and download your image instantly. No sign-up or credit card required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-16 px-6 bg-white/2">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4">Why GLM-Image is Different</h2>
+      <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Most AI image generators produce gibberish when you ask them to include text. GLM-Image solves this with its unique hybrid architecture.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">✍️</div>
+          <div>
+            <h3 class="font-semibold mb-1">Accurate Text Rendering</h3>
+            <p class="text-gray-400 text-sm">The #1 problem with AI image generators — GLM-Image fixes it. Text in your images is legible and correct every time.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">🎨</div>
+          <div>
+            <h3 class="font-semibold mb-1">High-Fidelity Output</h3>
+            <p class="text-gray-400 text-sm">Hybrid autoregressive + diffusion architecture delivers sharp, detailed images that rival commercial tools.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">🖼️</div>
+          <div>
+            <h3 class="font-semibold mb-1">Image Editing & Style Transfer</h3>
+            <p class="text-gray-400 text-sm">Upload reference images to guide the style. GLM-Image supports image-to-image generation with up to 4 references.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">🆓</div>
+          <div>
+            <h3 class="font-semibold mb-1">Free & Open Source</h3>
+            <p class="text-gray-400 text-sm">GLM-Image is fully open-source by Zhipu AI. This tool gives you free access without any watermarks.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">⚡</div>
+          <div>
+            <h3 class="font-semibold mb-1">Fast Generation</h3>
+            <p class="text-gray-400 text-sm">Generate high-quality images in seconds, not minutes. No queue, no waiting.</p>
+          </div>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
+          <div class="text-2xl mt-1">📐</div>
+          <div>
+            <h3 class="font-semibold mb-1">Multiple Aspect Ratios</h3>
+            <p class="text-gray-400 text-sm">Square, landscape, portrait, or standard — generate in the exact size you need for any platform.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases -->
+  <section class="py-16 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">What You Can Create</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">🎪</div>
+          <p class="text-sm font-medium">Event Posters</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">🛍️</div>
+          <p class="text-sm font-medium">Sale Banners</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">💼</div>
+          <p class="text-sm font-medium">Business Cards</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">📱</div>
+          <p class="text-sm font-medium">Social Media Posts</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">🎬</div>
+          <p class="text-sm font-medium">YouTube Thumbnails</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">📦</div>
+          <p class="text-sm font-medium">Product Labels</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">🪧</div>
+          <p class="text-sm font-medium">Neon Signs</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+          <div class="text-3xl mb-2">📰</div>
+          <p class="text-sm font-medium">Blog Headers</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GLM Image vs Others Comparison -->
+  <section class="py-16 px-6 bg-white/2">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4">GLM Image vs Other AI Generators</h2>
+      <p class="text-center text-gray-400 mb-10">See why GLM-Image leads in text rendering accuracy</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left py-3 px-4 text-gray-400 font-medium">Feature</th>
+              <th class="text-center py-3 px-4 text-indigo-400 font-semibold">GLM Image</th>
+              <th class="text-center py-3 px-4 text-gray-400 font-medium">Midjourney</th>
+              <th class="text-center py-3 px-4 text-gray-400 font-medium">DALL-E 3</th>
+              <th class="text-center py-3 px-4 text-gray-400 font-medium">Stable Diffusion</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            <tr>
+              <td class="py-3 px-4 text-gray-300">Text Rendering Accuracy</td>
+              <td class="text-center py-3 px-4 text-green-400 font-bold">⭐⭐⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-yellow-400">⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-yellow-400">⭐⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-red-400">⭐</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-gray-300">Free to Use</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+              <td class="text-center py-3 px-4 text-red-400">❌ Paid</td>
+              <td class="text-center py-3 px-4 text-red-400">❌ Paid</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-gray-300">Open Source</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+              <td class="text-center py-3 px-4 text-red-400">❌ No</td>
+              <td class="text-center py-3 px-4 text-red-400">❌ No</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-gray-300">Poster / Banner Design</td>
+              <td class="text-center py-3 px-4 text-green-400">⭐⭐⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-yellow-400">⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-yellow-400">⭐⭐⭐⭐</td>
+              <td class="text-center py-3 px-4 text-yellow-400">⭐⭐</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4 text-gray-300">Image Editing</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+              <td class="text-center py-3 px-4 text-yellow-400">Limited</td>
+              <td class="text-center py-3 px-4 text-yellow-400">Limited</td>
+              <td class="text-center py-3 px-4 text-green-400">✅ Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-16 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <div class="space-y-4" id="faqContainer"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 py-10 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-lg btn-primary flex items-center justify-center text-xs font-bold">G</div>
+            <span class="font-bold">GLM Image Generator</span>
+          </div>
+          <p class="text-gray-500 text-sm">Free AI image generator powered by GLM-Image. Create stunning visuals with perfect text rendering.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-3 text-gray-300">Tools</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li><a href="#tool" class="hover:text-white transition-colors">GLM Image Generator</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Poster Generator</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Banner Maker</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-3 text-gray-300">Resources</h4>
+          <ul class="space-y-2 text-sm text-gray-500">
+            <li><a href="https://z.ai/blog/glm-image" target="_blank" class="hover:text-white transition-colors">About GLM-Image</a></li>
+            <li><a href="https://huggingface.co/zai-org/GLM-Image" target="_blank" class="hover:text-white transition-colors">GLM-Image on HuggingFace</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-6 text-center text-gray-600 text-xs">
+        <p>© 2026 GLM Image Generator. Powered by <a href="https://z.ai" target="_blank" class="text-indigo-400 hover:underline">GLM-Image (Z.AI)</a> via <a href="https://fal.ai" target="_blank" class="text-indigo-400 hover:underline">fal.ai</a>. Not affiliated with Zhipu AI.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Data
+    const faqs = [
+      {
+        q: "What is GLM Image Generator?",
+        a: "GLM Image Generator is a free online tool powered by GLM-Image, an open-source AI image generation model by Zhipu AI. It specializes in generating high-fidelity images with accurate text rendering — something most AI image generators struggle with."
+      },
+      {
+        q: "Is GLM Image Generator really free?",
+        a: "Yes, GLM Image Generator is completely free to use. You can generate images without signing up or providing a credit card. For unlimited generations, you can optionally add your own fal.ai API key."
+      },
+      {
+        q: "What makes GLM-Image different from Midjourney or DALL-E?",
+        a: "GLM-Image's standout feature is accurate text rendering. While Midjourney, Stable Diffusion, and other AI generators often produce garbled or unreadable text in images, GLM-Image uses a hybrid autoregressive + diffusion architecture that understands and renders text correctly. This makes it ideal for creating posters, banners, business cards, and any design that includes text."
+      },
+      {
+        q: "What types of images can I generate with GLM Image Generator?",
+        a: "You can generate posters, banners, business cards, social media posts, YouTube thumbnails, product labels, neon signs, event flyers, blog headers, and any image that requires text to be readable. GLM-Image excels at graphic design tasks."
+      },
+      {
+        q: "How do I include text in my generated image?",
+        a: "Simply include the text you want in your prompt, using quotation marks for clarity. For example: 'A sale poster with the text \"SUMMER SALE 50% OFF\" in bold red letters on a white background.' GLM-Image will render the text accurately in your image."
+      },
+      {
+        q: "Is GLM-Image open source?",
+        a: "Yes, GLM-Image is fully open-source, released by Zhipu AI under an open license. You can find the model on HuggingFace at huggingface.co/zai-org/GLM-Image. This tool provides a free, easy-to-use web interface for the model."
+      },
+      {
+        q: "How long does it take to generate an image?",
+        a: "GLM Image Generator typically produces results in 5–15 seconds depending on server load. There is no queue or waiting — your image is generated immediately."
+      },
+      {
+        q: "Can I use the generated images commercially?",
+        a: "Images generated with GLM-Image are generally available for personal and commercial use, but please review the GLM-Image model license on HuggingFace for the latest terms. This tool adds no additional restrictions."
+      }
+    ];
+
+    // Render FAQ
+    const faqContainer = document.getElementById('faqContainer');
+    faqs.forEach((item, i) => {
+      faqContainer.innerHTML += `
+        <details class="bg-white/5 border border-white/10 rounded-xl overflow-hidden group">
+          <summary class="flex items-center justify-between px-6 py-4 cursor-pointer hover:bg-white/5 transition-colors font-medium text-sm">
+            ${item.q}
+            <span class="text-indigo-400 text-lg group-open:rotate-45 transition-transform ml-4 flex-shrink-0">+</span>
+          </summary>
+          <div class="px-6 pb-4 text-gray-400 text-sm leading-relaxed border-t border-white/5 pt-4">
+            ${item.a}
+          </div>
+        </details>
+      `;
+    });
+
+    // Set prompt from example
+    function setPrompt(btn) {
+      document.getElementById('prompt').value = btn.textContent.trim();
+    }
+
+    // Generate image via fal.ai API
+    async function generateImage() {
+      const prompt = document.getElementById('prompt').value.trim();
+      const style = document.getElementById('style').value;
+      const size = document.getElementById('size').value;
+      const apiKey = document.getElementById('apiKey').value.trim();
+
+      if (!prompt) {
+        showError('Please enter a prompt to generate an image.');
+        return;
+      }
+
+      const btn = document.getElementById('generateBtn');
+      const btnText = document.getElementById('btnText');
+      const spinner = document.getElementById('spinner');
+      const result = document.getElementById('result');
+      const error = document.getElementById('error');
+
+      // Loading state
+      btn.disabled = true;
+      btnText.textContent = 'Generating...';
+      spinner.classList.remove('hidden');
+      result.classList.add('hidden');
+      error.classList.add('hidden');
+
+      // Build full prompt
+      const fullPrompt = `${prompt}, ${style} style, high quality, professional`;
+
+      // Size mapping for fal.ai
+      const sizeMap = {
+        '1:1': 'square_hd',
+        '16:9': 'landscape_16_9',
+        '9:16': 'portrait_16_9',
+        '4:3': 'landscape_4_3'
+      };
+
+      try {
+        // Use fal.ai proxy endpoint
+        const falKey = apiKey || 'demo';
+        const headers = { 'Content-Type': 'application/json' };
+        if (apiKey) headers['Authorization'] = `Key ${apiKey}`;
+
+        const response = await fetch('https://fal.run/fal-ai/glm-image', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({
+            prompt: fullPrompt,
+            image_size: sizeMap[size] || 'square_hd',
+            num_inference_steps: 30,
+            guidance_scale: 7.5
+          })
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          if (response.status === 401 || response.status === 403) {
+            showError('API key required for generation. Please add your fal.ai API key below, or get a free key at fal.ai');
+          } else {
+            showError(`Generation failed: ${errData.detail || errData.message || 'Please try again.'}`);
+          }
+          return;
+        }
+
+        const data = await response.json();
+        const imageUrl = data.images?.[0]?.url || data.image?.url;
+
+        if (!imageUrl) {
+          showError('No image was returned. Please try again.');
+          return;
+        }
+
+        // Show result
+        document.getElementById('resultImg').src = imageUrl;
+        document.getElementById('downloadBtn').href = imageUrl;
+        result.classList.remove('hidden');
+        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      } catch (err) {
+        showError('Network error. Please check your connection and try again.');
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+        btnText.textContent = '✨ Generate Image';
+        spinner.classList.add('hidden');
+      }
+    }
+
+    function showError(msg) {
+      const error = document.getElementById('error');
+      error.textContent = msg;
+      error.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

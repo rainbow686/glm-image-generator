@@ -497,17 +497,22 @@
         '4:3': 'landscape_4_3'
       };
 
+      const FAL_KEY = '89197a8d-be7d-4c5b-934c-2f3d12c7b772:3f8d26a3ca1673a30d49d1e4be46caf3';
+
       try {
-        // Step 1: Submit job
-        const submitRes = await fetch('/api/generate', {
+        // Step 1: Submit job directly to fal.ai queue
+        const submitRes = await fetch('https://queue.fal.run/fal-ai/glm-image', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: fullPrompt, image_size: sizeMap[size] || 'square_hd' })
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Key ${FAL_KEY}`
+          },
+          body: JSON.stringify({ prompt: fullPrompt, image_size: sizeMap[size] || 'square_hd', num_inference_steps: 28 })
         });
 
         if (!submitRes.ok) {
           const errData = await submitRes.json().catch(() => ({}));
-          showError(`Generation failed: ${errData.error || 'Please try again.'}`);
+          showError(`Generation failed: ${errData.detail || 'Please try again.'}`);
           return;
         }
 
@@ -525,16 +530,14 @@
           await new Promise(r => setTimeout(r, 3000));
           attempts++;
 
-          const pollRes = await fetch('/api/generate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ request_id: requestId })
+          const pollRes = await fetch(`https://queue.fal.run/fal-ai/glm-image/requests/${requestId}`, {
+            headers: { 'Authorization': `Key ${FAL_KEY}` }
           });
 
           if (!pollRes.ok) continue;
           const pollData = await pollRes.json();
 
-          if (pollData.status === 'COMPLETED' || pollData.images || pollData.image) {
+          if (pollData.images || pollData.image) {
             const imageUrl = pollData.images?.[0]?.url || pollData.image?.url;
             if (imageUrl) {
               document.getElementById('resultImg').src = imageUrl;
@@ -550,7 +553,6 @@
             return;
           }
 
-          // Update status text
           const statusText = pollData.status === 'IN_PROGRESS' ? 'Generating...' : 'In queue...';
           btnText.textContent = statusText;
         }

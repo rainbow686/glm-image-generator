@@ -12,7 +12,7 @@
     }
   ],
   "routes": [
-    { "src": "/api/generate", "dest": "/api/generate.js" },
+    { "src": "/api/generate", "dest": "/api/generate.cjs" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }

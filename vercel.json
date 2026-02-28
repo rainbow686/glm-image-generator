@@ -1,8 +1,18 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/api/generate", "destination": "/api/generate.js" }
+  "outputDirectory": "public_root",
+  "builds": [
+    {
+      "src": "api/generate.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/api/generate", "dest": "/api/generate.js" },
+    { "src": "/(.*)", "dest": "/$1" }
   ]
 }

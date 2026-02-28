@@ -9,11 +9,26 @@ module.exports = async function handler(req, res) {
   const apiKey = process.env.FAL_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'Server configuration error' });
 
-  try {
-    const { prompt, image_size } = req.body;
-    if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+  const { prompt, image_size, request_id } = req.body;
 
-    const response = await fetch('https://fal.run/fal-ai/glm-image', {
+  // Step 2: Poll for result
+  if (request_id) {
+    try {
+      const statusRes = await fetch(`https://queue.fal.run/fal-ai/glm-image/requests/${request_id}`, {
+        headers: { 'Authorization': `Key ${apiKey}` }
+      });
+      const statusData = await statusRes.json();
+      return res.status(200).json(statusData);
+    } catch (err) {
+      return res.status(500).json({ error: 'Failed to check status' });
+    }
+  }
+
+  // Step 1: Submit job to queue
+  if (!prompt) return res.status(400).json({ error: 'Prompt is required' });
+
+  try {
+    const response = await fetch('https://queue.fal.run/fal-ai/glm-image', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,17 +37,18 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         prompt,
         image_size: image_size || 'square_hd',
-        num_inference_steps: 30,
+        num_inference_steps: 28,
         guidance_scale: 7.5
       })
     });
 
     const data = await response.json();
     if (!response.ok) {
-      return res.status(response.status).json({ error: data.detail || data.message || 'Generation failed' });
+      return res.status(response.status).json({ error: data.detail || data.message || 'Submission failed' });
     }
 
-    return res.status(200).json(data);
+    // Return request_id for polling
+    return res.status(200).json({ request_id: data.request_id, status: 'IN_QUEUE' });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal server error' });

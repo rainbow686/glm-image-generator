@@ -498,39 +498,64 @@
       };
 
       try {
-        // Use our server-side proxy (API key is stored securely on the server)
-        const response = await fetch('/api/generate', {
+        // Step 1: Submit job
+        const submitRes = await fetch('/api/generate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt: fullPrompt,
-            image_size: sizeMap[size] || 'square_hd'
-          })
+          body: JSON.stringify({ prompt: fullPrompt, image_size: sizeMap[size] || 'square_hd' })
         });
 
-        if (!response.ok) {
-          const errData = await response.json().catch(() => ({}));
-          if (response.status === 401 || response.status === 403) {
-            showError('Generation failed: authentication error. Please try again later.');
-          } else {
-            showError(`Generation failed: ${errData.detail || errData.message || 'Please try again.'}`);
+        if (!submitRes.ok) {
+          const errData = await submitRes.json().catch(() => ({}));
+          showError(`Generation failed: ${errData.error || 'Please try again.'}`);
+          return;
+        }
+
+        const submitData = await submitRes.json();
+        const requestId = submitData.request_id;
+        if (!requestId) {
+          showError('Failed to submit generation job. Please try again.');
+          return;
+        }
+
+        // Step 2: Poll for result (up to 120s)
+        let attempts = 0;
+        const maxAttempts = 40;
+        while (attempts < maxAttempts) {
+          await new Promise(r => setTimeout(r, 3000));
+          attempts++;
+
+          const pollRes = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ request_id: requestId })
+          });
+
+          if (!pollRes.ok) continue;
+          const pollData = await pollRes.json();
+
+          if (pollData.status === 'COMPLETED' || pollData.images || pollData.image) {
+            const imageUrl = pollData.images?.[0]?.url || pollData.image?.url;
+            if (imageUrl) {
+              document.getElementById('resultImg').src = imageUrl;
+              document.getElementById('downloadBtn').href = imageUrl;
+              result.classList.remove('hidden');
+              result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              return;
+            }
           }
-          return;
+
+          if (pollData.status === 'FAILED') {
+            showError('Image generation failed. Please try again.');
+            return;
+          }
+
+          // Update status text
+          const statusText = pollData.status === 'IN_PROGRESS' ? 'Generating...' : 'In queue...';
+          btnText.textContent = statusText;
         }
 
-        const data = await response.json();
-        const imageUrl = data.images?.[0]?.url || data.image?.url;
-
-        if (!imageUrl) {
-          showError('No image was returned. Please try again.');
-          return;
-        }
-
-        // Show result
-        document.getElementById('resultImg').src = imageUrl;
-        document.getElementById('downloadBtn').href = imageUrl;
-        result.classList.remove('hidden');
-        result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        showError('Generation timed out. Please try again.');
 
       } catch (err) {
         showError('Network error. Please check your connection and try again.');

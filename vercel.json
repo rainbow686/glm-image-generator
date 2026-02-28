@@ -1,18 +1,11 @@
 {
   "version": 2,
-  "outputDirectory": "public_root",
   "builds": [
-    {
-      "src": "api/generate.cjs",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
+    { "src": "api/generate.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
   ],
   "routes": [
-    { "src": "/api/generate", "dest": "/api/generate.cjs" },
+    { "src": "/api/generate", "dest": "/api/generate.js" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }

@@ -59,6 +59,7 @@
       <nav class="hidden md:flex gap-6 text-sm text-gray-400">
         <a href="#tool" class="hover:text-white transition-colors">Generator</a>
         <a href="#features" class="hover:text-white transition-colors">Features</a>
+        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
         <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
       </nav>
     </div>
@@ -144,6 +145,12 @@
           </div>
         </div>
 
+        <!-- Free tier counter -->
+        <div id="freeCounter" class="flex items-center justify-between bg-white/5 border border-white/10 rounded-xl px-4 py-3 mb-4">
+          <span class="text-sm text-gray-300">🎁 今日免费剩余：<span id="remainCount" class="font-bold text-indigo-400">3</span> 次</span>
+          <a href="#pricing" class="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">升级 Pro →</a>
+        </div>
+
         <!-- Generate Button -->
         <button id="generateBtn" onclick="generateImage()" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3">
           <span id="btnText">✨ Generate Image</span>
@@ -160,6 +167,7 @@
           <div class="border-t border-white/10 pt-6">
             <h3 class="text-sm font-medium text-gray-300 mb-4">Generated Image</h3>
             <div class="relative rounded-xl overflow-hidden bg-black/30 border border-white/10">
+              <canvas id="resultCanvas" class="w-full object-contain max-h-[512px] hidden"></canvas>
               <img id="resultImg" src="" alt="GLM Image Generator result" class="w-full object-contain max-h-[512px]" />
             </div>
             <div class="flex gap-3 mt-4">
@@ -363,6 +371,63 @@
     </div>
   </section>
 
+  <!-- Pricing -->
+  <section id="pricing" class="py-16 px-6 bg-white/2">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-center mb-4">Simple Pricing</h2>
+      <p class="text-center text-gray-400 mb-12">Start free, upgrade when you need more</p>
+      <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+        <!-- Free -->
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8">
+          <h3 class="text-xl font-bold mb-2">Free</h3>
+          <div class="text-4xl font-bold mb-6">$0</div>
+          <ul class="space-y-3 mb-8 text-sm text-gray-300">
+            <li class="flex items-center gap-2">✅ 3 images per day</li>
+            <li class="flex items-center gap-2">✅ All styles & sizes</li>
+            <li class="flex items-center gap-2">🔒 Watermark on images</li>
+            <li class="flex items-center gap-2">🔒 Standard queue</li>
+          </ul>
+          <button onclick="document.getElementById('prompt').focus()" class="w-full py-3 rounded-xl border border-white/20 text-sm font-medium hover:bg-white/10 transition-colors">
+            Start Free
+          </button>
+        </div>
+        <!-- Pro -->
+        <div class="bg-gradient-to-br from-indigo-600/30 to-purple-600/30 border border-indigo-500/50 rounded-2xl p-8 relative">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-500 text-xs font-bold px-4 py-1 rounded-full">MOST POPULAR</div>
+          <h3 class="text-xl font-bold mb-2">Pro</h3>
+          <div class="text-4xl font-bold mb-1">$9.9<span class="text-lg font-normal text-gray-400">/mo</span></div>
+          <p class="text-xs text-gray-400 mb-6">~$0.01 per image</p>
+          <ul class="space-y-3 mb-8 text-sm text-gray-300">
+            <li class="flex items-center gap-2">✅ Unlimited generations</li>
+            <li class="flex items-center gap-2">✅ No watermark</li>
+            <li class="flex items-center gap-2">✅ Priority queue</li>
+            <li class="flex items-center gap-2">✅ Commercial license</li>
+          </ul>
+          <button class="btn-primary w-full py-3 rounded-xl text-sm font-medium">
+            Upgrade to Pro — Coming Soon
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Limit Modal -->
+  <div id="limitModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-gray-900 border border-white/20 rounded-2xl p-8 max-w-md w-full text-center">
+      <div class="text-5xl mb-4">😅</div>
+      <h3 class="text-xl font-bold mb-2">今日免费次数已用完</h3>
+      <p class="text-gray-400 text-sm mb-6">每天免费生成 3 张图片，明天可继续使用。<br/>升级 Pro 享无限生成 + 无水印！</p>
+      <div class="flex gap-3">
+        <button onclick="document.getElementById('limitModal').classList.add('hidden')" class="flex-1 py-3 rounded-xl border border-white/20 text-sm font-medium hover:bg-white/10 transition-colors">
+          明天再来
+        </button>
+        <a href="#pricing" onclick="document.getElementById('limitModal').classList.add('hidden')" class="btn-primary flex-1 py-3 rounded-xl text-sm font-medium text-center">
+          升级 Pro $9.9/月
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- FAQ -->
   <section id="faq" class="py-16 px-6">
     <div class="max-w-3xl mx-auto">
@@ -459,12 +524,83 @@
     });
 
     // Set prompt from example
+    // Free tier management
+    const FREE_LIMIT = 3;
+    function getTodayKey() {
+      return 'glm_free_' + new Date().toISOString().slice(0, 10);
+    }
+    function getUsedCount() {
+      return parseInt(localStorage.getItem(getTodayKey()) || '0');
+    }
+    function incrementUsed() {
+      const key = getTodayKey();
+      localStorage.setItem(key, (getUsedCount() + 1).toString());
+      updateCounter();
+    }
+    function updateCounter() {
+      const isPro = localStorage.getItem('glm_is_pro') === 'true';
+      const remaining = isPro ? '∞' : Math.max(0, FREE_LIMIT - getUsedCount());
+      document.getElementById('remainCount').textContent = remaining;
+      document.getElementById('freeCounter').classList.toggle('hidden', isPro);
+    }
+    function canGenerate() {
+      if (localStorage.getItem('glm_is_pro') === 'true') return true;
+      return getUsedCount() < FREE_LIMIT;
+    }
+
+    // Watermark via Canvas
+    function applyWatermark(imageUrl) {
+      return new Promise((resolve) => {
+        const isPro = localStorage.getItem('glm_is_pro') === 'true';
+        if (isPro) { resolve({ url: imageUrl, isCanvas: false }); return; }
+
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          // Watermark
+          const fontSize = Math.max(16, Math.floor(img.naturalWidth / 40));
+          ctx.font = `bold ${fontSize}px Inter, Arial, sans-serif`;
+          const text = 'glm-image-generator.com';
+          const padding = fontSize * 0.6;
+          const textW = ctx.measureText(text).width;
+          const boxW = textW + padding * 2;
+          const boxH = fontSize + padding * 1.2;
+          const x = img.naturalWidth - boxW - 12;
+          const y = img.naturalHeight - boxH - 12;
+
+          ctx.fillStyle = 'rgba(0,0,0,0.55)';
+          ctx.beginPath();
+          ctx.roundRect(x, y, boxW, boxH, 6);
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(255,255,255,0.9)';
+          ctx.fillText(text, x + padding, y + boxH - padding * 0.7);
+
+          resolve({ url: canvas.toDataURL('image/png'), isCanvas: true });
+        };
+        img.onerror = () => resolve({ url: imageUrl, isCanvas: false });
+        img.src = imageUrl;
+      });
+    }
+
     function setPrompt(btn) {
       document.getElementById('prompt').value = btn.textContent.trim();
     }
 
     // Generate image via fal.ai API
     async function generateImage() {
+      // Check free limit
+      if (!canGenerate()) {
+        document.getElementById('limitModal').classList.remove('hidden');
+        return;
+      }
+
       const prompt = document.getElementById('prompt').value.trim();
       const style = document.getElementById('style').value;
       const size = document.getElementById('size').value;
@@ -540,8 +676,13 @@
           if (pollData.images || pollData.image) {
             const imageUrl = pollData.images?.[0]?.url || pollData.image?.url;
             if (imageUrl) {
-              document.getElementById('resultImg').src = imageUrl;
-              document.getElementById('downloadBtn').href = imageUrl;
+              // Apply watermark & show result
+              incrementUsed();
+              const { url: finalUrl } = await applyWatermark(imageUrl);
+              const timestamp = Date.now();
+              document.getElementById('resultImg').src = finalUrl;
+              document.getElementById('downloadBtn').href = finalUrl;
+              document.getElementById('downloadBtn').download = `glm-image-${timestamp}.png`;
               result.classList.remove('hidden');
               result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
               return;
@@ -574,6 +715,9 @@
       error.textContent = msg;
       error.classList.remove('hidden');
     }
+
+    // Init on load
+    updateCounter();
   </script>
 </body>
 </html>

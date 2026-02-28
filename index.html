@@ -523,9 +523,9 @@
           return;
         }
 
-        // Step 2: Poll for result (up to 120s)
+        // Step 2: Poll for result (up to 180s, GLM-Image cold start can take 2min)
         let attempts = 0;
-        const maxAttempts = 40;
+        const maxAttempts = 60;
         while (attempts < maxAttempts) {
           await new Promise(r => setTimeout(r, 3000));
           attempts++;
@@ -553,7 +553,7 @@
             return;
           }
 
-          const statusText = pollData.status === 'IN_PROGRESS' ? 'Generating...' : 'In queue...';
+          const statusText = pollData.status === 'IN_PROGRESS' ? '⚡ Generating...' : `⏳ In queue... (${attempts * 3}s)`;
           btnText.textContent = statusText;
         }
 

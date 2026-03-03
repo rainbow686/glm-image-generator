@@ -91,8 +91,8 @@
         <a href="#faq" class="hover:text-main transition-colors">FAQ</a>
       </nav>
       <div class="flex items-center gap-2">
-        <button onclick="setLang('zh')" class="lang-btn zh">中文</button>
-        <button onclick="setLang('en')" class="lang-btn en">EN</button>
+        <button onclick="switchLang('zh')" class="lang-btn" id="btnZh">中文</button>
+        <button onclick="switchLang('en')" class="lang-btn" id="btnEn">EN</button>
         <button onclick="toggleTheme()" class="theme-btn" id="themeBtn">🌙</button>
       </div>
     </div>
@@ -754,6 +754,19 @@
     // Init on load
     updateCounter();
     
+    // Language toggle
+    function switchLang(lang) {
+      // Hide all bilingual content
+      document.querySelectorAll('.zh, .en').forEach(el => el.classList.add('hidden'));
+      // Show content for selected language
+      document.querySelectorAll('.' + lang).forEach(el => el.classList.remove('hidden'));
+      // Update button states
+      document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
+    }
+    
     // Theme toggle
     function toggleTheme() {
       const isDark = document.body.classList.contains('dark');
@@ -768,14 +781,13 @@
     document.body.classList.add(savedTheme);
     document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
     
-    // Language toggle
-    function setLang(lang) {
-      document.querySelectorAll('.zh, .en').forEach(el => el.classList.add('hidden'));
-      document.querySelectorAll('.' + lang).forEach(el => el.classList.remove('hidden'));
-      document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
-      event.target.classList.add('active');
-      document.documentElement.lang = lang;
-    }
+    // Init language
+    const savedLang = localStorage.getItem('lang') || 'zh';
+    document.getElementById('btnZh').classList.toggle('active', savedLang === 'zh');
+    document.getElementById('btnEn').classList.toggle('active', savedLang === 'en');
+    document.querySelectorAll('.zh, .en').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.' + savedLang).forEach(el => el.classList.remove('hidden'));
+    document.documentElement.lang = savedLang;
   </script>
 </body>
 </html>

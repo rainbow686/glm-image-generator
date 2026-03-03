@@ -31,37 +31,70 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    body { font-family: 'Inter', sans-serif; }
-    .gradient-bg { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a3e 50%, #0f0f1a 100%); }
+    body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
+    
+    /* Dark Theme */
+    .dark { --bg-primary: linear-gradient(135deg, #0f0f1a 0%, #1a1a3e 50%, #0f0f1a 100%); }
+    .dark .gradient-bg { background: linear-gradient(135deg, #0f0f1a 0%, #1a1a3e 50%, #0f0f1a 100%); }
+    .dark .bg-main { background: #0f0f1a; }
+    .dark .bg-card { background: rgba(255,255,255,0.05); }
+    .dark .text-main { color: white; }
+    .dark .text-muted { color: #9ca3af; }
+    .dark header { background: rgba(0,0,0,0.3); backdrop-filter: blur(12px); }
+    .dark .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+    
+    /* Light Theme */
+    .light { --bg-primary: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%); }
+    .light .gradient-bg { background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f8fafc 100%); }
+    .light .bg-main { background: #f8fafc; }
+    .light .bg-card { background: white; }
+    .light .text-main { color: #1e293b; }
+    .light .text-muted { color: #64748b; }
+    .light header { background: rgba(255,255,255,0.95); border-bottom: 1px solid #e2e8f0; }
+    .light .btn-primary { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+    .light .btn-primary:hover { box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3); }
+    
     .card-glow { box-shadow: 0 0 30px rgba(99, 102, 241, 0.15); }
-    .btn-primary { background: linear-gradient(135deg, #6366f1, #8b5cf6); transition: all 0.2s; }
+    .light .card-glow { box-shadow: 0 0 30px rgba(99, 102, 241, 0.1); }
+    .btn-primary { transition: all 0.2s; }
     .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4); }
     .spinner { border: 3px solid rgba(255,255,255,0.2); border-top-color: white; border-radius: 50%; width: 24px; height: 24px; animation: spin 0.8s linear infinite; }
+    .light .spinner { border-color: rgba(0,0,0,0.2); border-top-color: #4f46e5; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .fade-in { animation: fadeIn 0.5s ease-in; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .theme-btn { cursor: pointer; padding: 8px 16px; border-radius: 20px; font-size: 14px; transition: all 0.2s; }
+    .dark .theme-btn { background: rgba(255,255,255,0.1); color: #fbbf24; }
+    .light .theme-btn { background: #e2e8f0; color: #1e293b; }
+    .lang-btn { cursor: pointer; padding: 6px 12px; border-radius: 16px; font-size: 13px; transition: all 0.2s; }
+    .dark .lang-btn { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+    .dark .lang-btn:hover { background: rgba(255,255,255,0.2); }
+    .dark .lang-btn.active { background: #6366f1; color: white; }
+    .light .lang-btn { background: #e2e8f0; color: #64748b; }
+    .light .lang-btn:hover { background: #cbd5e1; }
+    .light .lang-btn.active { background: #4f46e5; color: white; }
   </style>
 </head>
-<body class="gradient-bg min-h-screen text-white">
-
-  <!-- AdSense Top Placeholder -->
-  <div class="w-full bg-gray-900/50 flex items-center justify-center py-2 text-gray-600 text-xs">
-    Advertisement
-  </div>
+<body class="gradient-bg min-h-screen">
 
   <!-- Header -->
   <header class="border-b border-white/10 py-4 px-6">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
-        <div class="w-8 h-8 rounded-lg btn-primary flex items-center justify-center text-sm font-bold">G</div>
-        <span class="font-bold text-lg">GLM Image Generator</span>
+        <div class="w-8 h-8 rounded-lg btn-primary flex items-center justify-center text-sm font-bold text-white">G</div>
+        <span class="font-bold text-lg text-main">GLM Image Generator</span>
       </div>
-      <nav class="hidden md:flex gap-6 text-sm text-gray-400">
-        <a href="#tool" class="hover:text-white transition-colors">Generator</a>
-        <a href="#features" class="hover:text-white transition-colors">Features</a>
-        <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
-        <a href="#faq" class="hover:text-white transition-colors">FAQ</a>
+      <nav class="hidden md:flex gap-6 text-sm text-muted">
+        <a href="#tool" class="hover:text-main transition-colors"><span class="zh">生图工具</span><span class="en">Generator</span></a>
+        <a href="#features" class="hover:text-main transition-colors"><span class="zh">功能特点</span><span class="en">Features</span></a>
+        <a href="#pricing" class="hover:text-main transition-colors"><span class="zh">价格</span><span class="en">Pricing</span></a>
+        <a href="#faq" class="hover:text-main transition-colors">FAQ</a>
       </nav>
+      <div class="flex items-center gap-2">
+        <button onclick="setLang('zh')" class="lang-btn zh">中文</button>
+        <button onclick="setLang('en')" class="lang-btn en">EN</button>
+        <button onclick="toggleTheme()" class="theme-btn" id="themeBtn">🌙</button>
+      </div>
     </div>
   </header>
 
@@ -69,14 +102,16 @@
   <section class="py-16 px-6 text-center">
     <div class="max-w-4xl mx-auto">
       <div class="inline-block bg-indigo-500/20 text-indigo-300 text-sm font-medium px-4 py-1 rounded-full mb-6 border border-indigo-500/30">
-        🔥 Powered by GLM-Image · First Open-Source Model with Perfect Text Rendering
+        <span class="zh">🔥 首款完美渲染文字的开源AI图像生成模型</span>
+        <span class="en">🔥 Powered by GLM-Image · First Open-Source Model with Perfect Text Rendering</span>
       </div>
-      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-        Free <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">GLM Image Generator</span>
-        <br />with Perfect Text in Images
+      <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-main">
+        <span class="zh">免费 <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">GLM 图像生成器</span><br/>完美渲染文字的AI图像</span>
+        <span class="en hidden">Free <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">GLM Image Generator</span><br />with Perfect Text in Images</span>
       </h1>
-      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-        Generate stunning AI images with accurate, readable text using GLM-Image — the first open-source model that actually gets text rendering right. Create posters, banners, ads, and more for free.
+      <p class="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-muted">
+        <span class="zh">使用 GLM-Image 生成带有准确、可读文字的惊艳AI图像——首款真正能正确渲染文字的开源模型。海报、横幅、广告等，免费生成！</span>
+        <span class="en hidden">Generate stunning AI images with accurate, readable text using GLM-Image — the first open-source model that actually gets text rendering right. Create posters, banners, ads, and more for free.</span>
       </p>
       <a href="#tool" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold text-lg">
         Start Generating for Free →
@@ -718,6 +753,29 @@
 
     // Init on load
     updateCounter();
+    
+    // Theme toggle
+    function toggleTheme() {
+      const isDark = document.body.classList.contains('dark');
+      document.body.classList.toggle('dark');
+      document.body.classList.toggle('light');
+      document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+    
+    // Init theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.add(savedTheme);
+    document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+    
+    // Language toggle
+    function setLang(lang) {
+      document.querySelectorAll('.zh, .en').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.' + lang).forEach(el => el.classList.remove('hidden'));
+      document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+      document.documentElement.lang = lang;
+    }
   </script>
 </body>
 </html>

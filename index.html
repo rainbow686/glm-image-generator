@@ -114,7 +114,8 @@
         <span class="en hidden">Generate stunning AI images with accurate, readable text using GLM-Image — the first open-source model that actually gets text rendering right. Create posters, banners, ads, and more for free.</span>
       </p>
       <a href="#tool" class="btn-primary inline-block px-8 py-4 rounded-xl font-semibold text-lg">
-        Start Generating for Free →
+        <span class="zh">🚀 开始免费生成</span>
+        <span class="en">Start Generating for Free →</span>
       </a>
     </div>
   </section>
@@ -127,7 +128,7 @@
         <!-- Prompt Input -->
         <div class="mb-6">
           <label class="block text-sm font-medium text-gray-300 mb-2">
-            Describe your image <span class="text-indigo-400">*</span>
+            <span class="zh">描述你想要的图像</span><span class="en">Describe your image</span> <span class="text-indigo-400">*</span>
           </label>
           <textarea
             id="prompt"
@@ -140,7 +141,7 @@
         <!-- Style & Size -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Style</label>
+            <label class="block text-sm font-medium text-gray-300 mb-2"><span class="zh">风格</span><span class="en">Style</span></label>
             <select id="style" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-sm">
               <option value="photorealistic">Photorealistic</option>
               <option value="illustration">Illustration</option>
@@ -151,7 +152,7 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-medium text-gray-300 mb-2">Size</label>
+            <label class="block text-sm font-medium text-gray-300 mb-2"><span class="zh">尺寸</span><span class="en">Size</span></label>
             <select id="size" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-indigo-500 text-sm">
               <option value="1:1">Square (1:1)</option>
               <option value="16:9">Landscape (16:9)</option>
@@ -163,7 +164,7 @@
 
         <!-- Example Prompts -->
         <div class="mb-6">
-          <p class="text-xs text-gray-500 mb-2">Quick examples:</p>
+          <p class="text-xs text-gray-500 mb-2"><span class="zh">快速示例：</span><span class="en">Quick examples:</span></p>
           <div class="flex flex-wrap gap-2">
             <button onclick="setPrompt(this)" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg px-3 py-1.5 text-gray-300 transition-colors">
               Sale poster with 50% OFF text
@@ -188,29 +189,32 @@
 
         <!-- Generate Button -->
         <button id="generateBtn" onclick="generateImage()" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-3">
-          <span id="btnText">✨ Generate Image</span>
+          <span id="btnText"><span class="zh">✨ 生成图像</span><span class="en">✨ Generate Image</span></span>
           <div id="spinner" class="spinner hidden"></div>
         </button>
 
         <!-- API Key Notice -->
         <p class="text-center text-xs text-gray-600 mt-3">
-          Powered by GLM-Image via fal.ai · Free tier available
+          <span class="zh">由 GLM-Image 提供支持 via fal.ai · 免费可用</span>
+          <span class="en">Powered by GLM-Image via fal.ai · Free tier available</span>
         </p>
 
         <!-- Result -->
         <div id="result" class="hidden mt-8 fade-in">
           <div class="border-t border-white/10 pt-6">
-            <h3 class="text-sm font-medium text-gray-300 mb-4">Generated Image</h3>
+            <h3 class="text-sm font-medium text-gray-300 mb-4"><span class="zh">生成的图像</span><span class="en">Generated Image</span></h3>
             <div class="relative rounded-xl overflow-hidden bg-black/30 border border-white/10">
               <canvas id="resultCanvas" class="w-full object-contain max-h-[512px] hidden"></canvas>
               <img id="resultImg" src="" alt="GLM Image Generator result" class="w-full object-contain max-h-[512px]" />
             </div>
             <div class="flex gap-3 mt-4">
               <a id="downloadBtn" href="#" download="glm-image.png" class="btn-primary flex-1 py-3 rounded-xl font-medium text-center text-sm">
-                ⬇️ Download Image
+                <span class="zh">⬇️ 下载图像</span>
+                <span class="en">⬇️ Download Image</span>
               </a>
               <button onclick="generateImage()" class="flex-1 py-3 rounded-xl font-medium text-sm bg-white/5 hover:bg-white/10 border border-white/10 transition-colors">
-                🔄 Regenerate
+                <span class="zh">🔄 重新生成</span>
+                <span class="en">🔄 Regenerate</span>
               </button>
             </div>
           </div>
@@ -234,7 +238,7 @@
   <!-- How It Works -->
   <section class="py-16 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12">How to Use GLM Image Generator</h2>
+      <h2 class="text-3xl font-bold text-center mb-12"><span class="zh">如何使用 GLM 图像生成器</span><span class="en">How to Use GLM Image Generator</span></h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
           <div class="w-14 h-14 btn-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">1</div>
@@ -258,48 +262,48 @@
   <!-- Features -->
   <section id="features" class="py-16 px-6 bg-white/2">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-4">Why GLM-Image is Different</h2>
+      <h2 class="text-3xl font-bold text-center mb-4"><span class="zh">为什么选择 GLM-Image？</span><span class="en">Why GLM-Image is Different</span></h2>
       <p class="text-center text-gray-400 mb-12 max-w-2xl mx-auto">Most AI image generators produce gibberish when you ask them to include text. GLM-Image solves this with its unique hybrid architecture.</p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">✍️</div>
           <div>
-            <h3 class="font-semibold mb-1">Accurate Text Rendering</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">精准文字渲染</span><span class="en">Accurate Text Rendering</span></h3>
             <p class="text-gray-400 text-sm">The #1 problem with AI image generators — GLM-Image fixes it. Text in your images is legible and correct every time.</p>
           </div>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">🎨</div>
           <div>
-            <h3 class="font-semibold mb-1">High-Fidelity Output</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">高品质输出</span><span class="en">High-Fidelity Output</span></h3>
             <p class="text-gray-400 text-sm">Hybrid autoregressive + diffusion architecture delivers sharp, detailed images that rival commercial tools.</p>
           </div>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">🖼️</div>
           <div>
-            <h3 class="font-semibold mb-1">Image Editing & Style Transfer</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">图像编辑与风格迁移</span><span class="en">Image Editing & Style Transfer</span></h3>
             <p class="text-gray-400 text-sm">Upload reference images to guide the style. GLM-Image supports image-to-image generation with up to 4 references.</p>
           </div>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">🆓</div>
           <div>
-            <h3 class="font-semibold mb-1">Free & Open Source</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">免费开源</span><span class="en">Free & Open Source</span></h3>
             <p class="text-gray-400 text-sm">GLM-Image is fully open-source by Zhipu AI. This tool gives you free access without any watermarks.</p>
           </div>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">⚡</div>
           <div>
-            <h3 class="font-semibold mb-1">Fast Generation</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">快速生成</span><span class="en">Fast Generation</span></h3>
             <p class="text-gray-400 text-sm">Generate high-quality images in seconds, not minutes. No queue, no waiting.</p>
           </div>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-2xl p-6 flex gap-4">
           <div class="text-2xl mt-1">📐</div>
           <div>
-            <h3 class="font-semibold mb-1">Multiple Aspect Ratios</h3>
+            <h3 class="font-semibold mb-1"><span class="zh">多种比例尺寸</span><span class="en">Multiple Aspect Ratios</span></h3>
             <p class="text-gray-400 text-sm">Square, landscape, portrait, or standard — generate in the exact size you need for any platform.</p>
           </div>
         </div>
@@ -310,39 +314,39 @@
   <!-- Use Cases -->
   <section class="py-16 px-6">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12">What You Can Create</h2>
+      <h2 class="text-3xl font-bold text-center mb-12"><span class="zh">你可以创建什么</span><span class="en">What You Can Create</span></h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">🎪</div>
-          <p class="text-sm font-medium">Event Posters</p>
+          <p class="text-sm font-medium"><span class="zh">活动海报</span><span class="en">Event Posters</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">🛍️</div>
-          <p class="text-sm font-medium">Sale Banners</p>
+          <p class="text-sm font-medium"><span class="zh">促销横幅</span><span class="en">Sale Banners</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">💼</div>
-          <p class="text-sm font-medium">Business Cards</p>
+          <p class="text-sm font-medium"><span class="zh">名片设计</span><span class="en">Business Cards</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">📱</div>
-          <p class="text-sm font-medium">Social Media Posts</p>
+          <p class="text-sm font-medium"><span class="zh">社交媒体帖子</span><span class="en">Social Media Posts</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">🎬</div>
-          <p class="text-sm font-medium">YouTube Thumbnails</p>
+          <p class="text-sm font-medium"><span class="zh">YouTube 缩略图</span><span class="en">YouTube Thumbnails</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">📦</div>
-          <p class="text-sm font-medium">Product Labels</p>
+          <p class="text-sm font-medium"><span class="zh">产品标签</span><span class="en">Product Labels</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">🪧</div>
-          <p class="text-sm font-medium">Neon Signs</p>
+          <p class="text-sm font-medium"><span class="zh">霓虹灯招牌</span><span class="en">Neon Signs</span></p>
         </div>
         <div class="bg-white/5 border border-white/10 rounded-xl p-4">
           <div class="text-3xl mb-2">📰</div>
-          <p class="text-sm font-medium">Blog Headers</p>
+          <p class="text-sm font-medium"><span class="zh">博客封面</span><span class="en">Blog Headers</span></p>
         </div>
       </div>
     </div>
@@ -409,7 +413,7 @@
   <!-- Pricing -->
   <section id="pricing" class="py-16 px-6 bg-white/2">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-4">Simple Pricing</h2>
+      <h2 class="text-3xl font-bold text-center mb-4"><span class="zh">价格方案</span><span class="en">Simple Pricing</span></h2>
       <p class="text-center text-gray-400 mb-12">Start free, upgrade when you need more</p>
       <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
         <!-- Free -->
@@ -466,7 +470,7 @@
   <!-- FAQ -->
   <section id="faq" class="py-16 px-6">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+      <h2 class="text-3xl font-bold text-center mb-12"><span class="zh">常见问题</span><span class="en">Frequently Asked Questions</span></h2>
       <div class="space-y-4" id="faqContainer"></div>
     </div>
   </section>
@@ -740,7 +744,7 @@
         console.error(err);
       } finally {
         btn.disabled = false;
-        btnText.textContent = '✨ Generate Image';
+        btnText.innerHTML = '<span class="zh">✨ 生成图像</span><span class="en">✨ Generate Image</span>';
         spinner.classList.add('hidden');
       }
     }
